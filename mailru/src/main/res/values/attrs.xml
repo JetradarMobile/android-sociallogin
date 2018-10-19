@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <attr name="mail_ru_toolbar_title_text" format="string|reference"/>
+  <attr name="mail_ru_toolbar_title_style" format="reference"/>
+  <attr name="mail_ru_toolbar_title_text_appearance" format="reference"/>
+  <attr name="mail_ru_toolbar_title_text_color" format="color|reference"/>
+  <attr name="mail_ru_progressbar_base_color" format="color|reference"/>
+  <attr name="mail_ru_progressbar_highlight_color" format="color|reference"/>
+  <attr name="mail_ru_toolbar_background_color" format="color|reference"/>
+  <attr name="mail_ru_navigation_icon_color" format="color|reference"/>
+</resources>

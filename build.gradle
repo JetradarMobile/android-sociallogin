@@ -1,0 +1,34 @@
+buildscript {
+  apply from: 'dependencies.gradle'
+
+  repositories {
+    google()
+    jcenter()
+    mavenCentral()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+  }
+  dependencies {
+    classpath gradlePlugins.android
+    classpath gradlePlugins.kotlin
+    classpath gradlePlugins.bintray
+    classpath gradlePlugins.versions
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    mavenCentral()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+
+apply from: 'dependencies.gradle'
+apply plugin: 'com.github.ben-manes.versions'

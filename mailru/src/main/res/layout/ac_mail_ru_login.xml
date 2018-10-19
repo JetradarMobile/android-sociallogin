@@ -1,0 +1,52 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <WebView
+      android:id="@+id/webView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/appBar"/>
+
+  <FrameLayout
+      android:id="@+id/appBar"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="?attr/mail_ru_toolbar_title_style"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:titleTextAppearance="?attr/mail_ru_toolbar_title_text_appearance"
+        app:titleTextColor="?attr/mail_ru_toolbar_title_text_color"
+        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+        app:title="?attr/mail_ru_toolbar_title_text"
+        tools:title="Mail.ru Auth"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        android:progressDrawable="@drawable/progress_bar"
+        tools:progress="73"/>
+
+  </FrameLayout>
+
+  <View
+      android:id="@+id/toolbarShadow"
+      android:layout_width="match_parent"
+      android:layout_height="4dp"
+      android:layout_below="@+id/appBar"
+      android:background="@drawable/toolbar_shadow"
+      android:visibility="gone"
+      tools:visibility="visible"/>
+
+</RelativeLayout>

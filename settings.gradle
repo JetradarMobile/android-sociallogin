@@ -1,0 +1,12 @@
+include ':sociallogin'
+include ':coroutines'
+include ':rx'
+
+include ':facebook'
+include ':google'
+include ':line'
+include ':mailru'
+include ':odnoklassniki'
+include ':twitter'
+include ':vkontakte'
+include ':wechat'
