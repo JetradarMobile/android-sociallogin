@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-google/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-google/_latestVersion)
 
 # SocialLogin Google module
 
@@ -6,15 +6,7 @@ This module depends on [SocialLogin core library][sociallogin-core]
 
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
-}
-```
-
-## Install
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:google:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-google:x.y.z'
 }
 ```
 
@@ -22,5 +14,4 @@ dependencies {
 
 All that you need is to setup google in your project.  [Follow the instructions here][google-instructions]
 
-[sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin
 [google-instructions]: https://developers.google.com/identity/sign-in/android/start-integrating

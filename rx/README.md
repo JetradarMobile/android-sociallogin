@@ -1,44 +1,14 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-google/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-google/_latestVersion)
 
-# SocialLogin RxJava module
+# SocialLogin RxJava2 module
 
-This module depends on [SocialLogin core library][sociallogin-core]
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
-}
-```
-
-## Install
+RxJava extension to [SocialNetwork][socialnetwork]
 
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:rx:x.y.z'
-}
-```
-
-## Setup
-
-Social login supports RxJava 2. For use social login in rx maner Just replace **SocialLogin** with **RxSocialLogin**
-
-```Kotlin
-RxSocialLogin.instance.loginTo(this, /* Activity */ FacebookNetwork())
-      .subscribe(
-        { token -> /* do somthing with token */ },
-        { error -> /* handle error */ }
-      )
-```
-
-and in onActivityResult too
-
-
-```Kotlin
-override fun onActivtyResult(requestCode: Int, resultCode: Int, data: Intent?) {
-  super.onActivityResult(requestCode, resultCode, data)
-  RxSocialLogin.instance.onActivityResult(requestCode, resultCode, data)
+    compile 'com.github.jetradarmobile:android-sociallogin-rxjava2:x.y.z'
 }
 ```
 
 
-[sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin
+[socialnetwork]: https://github.com/JetradarMobile/android-sociallogin/sociallogin/src/main/java/com/jetradarmobile/sociallogin/SocialNetwork.kt

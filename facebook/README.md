@@ -1,20 +1,10 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-facebook/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-facebook/_latestVersion)
 
 # SocialLogin Facebook module
 
-This module depends on [SocialLogin core library][sociallogin-core]
-
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
-}
-```
-
-## Install
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:facebook:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-facebook:x.y.z'
 }
 ```
 
@@ -39,6 +29,3 @@ Then add this strings to your AndroidManifest.xml inside <application> section
 
 </application>
 ```
-
-
-[sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin

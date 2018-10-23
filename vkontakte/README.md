@@ -1,20 +1,10 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-vk/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-vk/_latestVersion)
 
-# SocialLogin Vkontakte module
-
-This module depends on [SocialLogin core library][sociallogin-core]
+# SocialLogin Mail.ru module
 
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
-}
-```
-
-## Install
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:vkontakte:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-vk:x.y.z'
 }
 ```
 
@@ -36,5 +26,3 @@ class App: Application() {
  }
 }
 ```
-
-[sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin

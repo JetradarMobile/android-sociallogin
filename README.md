@@ -1,25 +1,13 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin/_latestVersion)
 
 # Social Login
 ### Library for authorizing in popular social networks
-
-## Install
-
-Include jitpack to repositories inside your root build.gradle file
-
-```Groovy
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
 
 To include 'core' module add following string to your module build.gradle file
 
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin:x.y.z'
 }
 ```
 where ```x.y.z``` is the version of lib. You can find latest version in the badge on top of the page
@@ -32,79 +20,28 @@ For example if you need a facebook, you should add this line in build.gradle fil
 ```Groovy
 dependencies {
     ...
-    compile 'com.github.KosyanMedia.android-sociallogin:facebook:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-facebook:x.y.z'
 }
 ```
 
 There is a list of modules:
 
 ```Groovy
-compile 'com.github.KosyanMedia.android-sociallogin:facebook:x.y.z'
-compile 'com.github.KosyanMedia.android-sociallogin:google:x.y.z'
-compile 'com.github.KosyanMedia.android-sociallogin:odnoklassniki:x.y.z'
-compile 'com.github.KosyanMedia.android-sociallogin:rx:x.y.z'
-compile 'com.github.KosyanMedia.android-sociallogin:twitter:x.y.z'
-compile 'com.github.KosyanMedia.android-sociallogin:vkontakte:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-facebook:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-google:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-line:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-mailru:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-odnoklassniki:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-twitter:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-vk:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-wechat:x.y.z'
+
+compile 'com.github.jetradarmobile:android-sociallogin-rxJava2:x.y.z'
+compile 'com.github.jetradarmobile:android-sociallogin-coroutines:x.y.z'
+
 ```
 
 If module you want is not present here, you can implement it by yourself
 Also you can contribute, by creating pull-requests =)
 
 For instructions see appropriate social network module.
-
-## Usage
-
-All samples will be in Kotlin, [sample project is here][kotlin-sample]
-
-If you use Java see [Java Sample][java-sample]
-
-To login into some network you should call SocialLogin singleton
-
-```Kotlin
-SocialLogin.instance.loginTo(this, /* Activity */ FacebookNetwork(), object: SocialLoginCallback {
-  
-  override fun onLoginSuccess(socialNetwork: SocialNetwork, token: SocialToken){
-    // your code  
-  }
-  
-  override fun onLoginError(socialNetwork: SocialNetwork, errorMessage: Strig) {
-    // your code
-  }
-})
-```
-Also you should redirect you onActivityResult() callback to SocialLogin
-
-```Kotlin
-override fun onActivtyResult(requestCode: Int, resultCode: Int, data: Intent?) { 
-  SocialLogin.instance.onActivityResult(requestCode, resultCode, data)
-  super.onActivityResult(requestCode, resultCode, data)
-}
-```
-
-## Rx Java
-
-First of all you should include sociallogin-rx module to your project
-
-Social login supports RxJava 2. For use social login in rx maner Just replace **SocialLogin** with **RxSocialLogin**
-
-```Kotlin
-RxSocialLogin.instance.loginTo(this, /* Activity */ FacebookNetwork())
-      .subscribe(
-        { token -> /* do somthing with token */ },
-        { error -> /* handle error */ }
-      )
-```
-
-and in onActivityResult too
-
-
-```Kotlin
-override fun onActivtyResult(requestCode: Int, resultCode: Int, data: Intent?) { 
-  RxSocialLogin.instance.onActivityResult(requestCode, resultCode, data)
-  super.onActivityResult(requestCode, resultCode, data)
-}
-```
-
-
-[java-sample]: https://github.com/KosyanMedia/android-sociallogin/tree/master/sample-java
-[kotlin-sample]: https://github.com/KosyanMedia/android-sociallogin/tree/master/sample-kotlin

@@ -1,35 +1,9 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-twitter/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-twitter/_latestVersion)
 
 # SocialLogin Twitter module
 
-This module depends on [SocialLogin core library][sociallogin-core]
-
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-twitter:x.y.z'
 }
 ```
-
-## Install
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:twitter:x.y.z'
-}
-```
-
-## Setup
-
-Add following repository to your root project build.gradle file
-
-```Groovy
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-```
-
-Use as shown in [sample][sample-kotlin]
-
-
-[sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin
-[sample-kotlin]: https://github.com/KosyanMedia/android-sociallogin/tree/master/sample-kotlin

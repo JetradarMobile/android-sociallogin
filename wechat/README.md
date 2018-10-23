@@ -1,40 +1,15 @@
-[![](https://jitpack.io/v/KosyanMedia/android-sociallogin.svg)](https://jitpack.io/#KosyanMedia/android-sociallogin)
+[ ![Download](https://api.bintray.com/packages/jetradar/maven/android-sociallogin-wechat/images/download.svg) ](https://bintray.com/jetradar/maven/android-sociallogin-wechat/_latestVersion)
 
-# SocialLogin Vkontakte module
-
-This module depends on [SocialLogin core library][sociallogin-core]
+# SocialLogin WeChat module
 
 ```Groovy
 dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:sociallogin:x.y.z'
-}
-```
-
-## Install
-
-```Groovy
-dependencies {
-    compile 'com.github.KosyanMedia.android-sociallogin:vkontakte:x.y.z'
+    compile 'com.github.jetradarmobile:android-sociallogin-wechat:x.y.z'
 }
 ```
 
 ## Setup
 
-Add your app id in resources. You should use exact same resource name as in sample below
-
-```xml
-<integer name="com_vk_sdk_AppId">YOUR_APP_ID</integer>
-```
-
-Then initialize VKSDK inside onCreate() method of your Application class
-
-```Kotlin
-class App: Application() {
- override fun onCreate() {
-     super.onCreate()
-     VKSdk.initialize(applicationContext)
- }
-}
-```
+You have to add your own WXEntryActivity to specific package: "{your.app.package}.wxapi.WXEntryActivity" extends library WXEntryActivity 
 
 [sociallogin-core]: https://github.com/KosyanMedia/android-sociallogin
