@@ -2,10 +2,10 @@ package com.jetradarmobile.sociallogin.line
 
 import android.app.Activity
 import android.content.Intent
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import com.linecorp.linesdk.LineApiResponseCode
 import com.linecorp.linesdk.LineCredential
 import com.linecorp.linesdk.LineProfile
@@ -15,6 +15,7 @@ import com.linecorp.linesdk.auth.LineLoginApi
 
 class LineNetwork(private val channelId: String) : SocialNetwork {
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -58,7 +59,7 @@ class LineNetwork(private val channelId: String) : SocialNetwork {
   )
 
   companion object {
-    private const val REQUEST_CODE = 0x001e
+    const val REQUEST_CODE = 0x001c
     const val CODE = "line"
   }
 }

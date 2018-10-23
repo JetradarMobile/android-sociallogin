@@ -18,7 +18,6 @@ android {
 
 dependencies {
   implementation libraries.kotlinStdLib
-
   implementation libraries.socialLogin
 }
 
@@ -30,7 +29,7 @@ publishing {
 
       groupId bintrayConstants.libraryGroup
       version bintrayConstants.libraryVersion
-      artifactId 'sociallogin-coroutines'
+      artifactId 'android-sociallogin-coroutines'
 
       pom.withXml {
         def dependenciesNode = asNode().appendNode('dependencies')
@@ -57,7 +56,7 @@ bintray {
 
   pkg {
     repo = bintrayConstants.repoName
-    name = 'sociallogin-coroutines'
+    name = 'android-sociallogin-coroutines'
     userOrg = bintrayConstants.userOrg
     licenses = ['Apache-2.0']
     vcsUrl = bintrayConstants.github

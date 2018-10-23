@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.webkit.CookieManager
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 
 class MailRuNetwork(
     private val clientId: String,
@@ -15,6 +15,7 @@ class MailRuNetwork(
 ) : SocialNetwork {
 
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -62,7 +63,7 @@ class MailRuNetwork(
   private fun makeToken(token: String?) = SocialAccount(token ?: "")
 
   companion object {
-    const val REQUEST_CODE = 0x00f0
+    const val REQUEST_CODE = 0x001e
     const val CODE = "mail_ru"
   }
 }

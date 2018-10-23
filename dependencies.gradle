@@ -5,7 +5,7 @@ ext.bintrayConstants = [
     libraryDesc   : 'Reactive library for social authorization',
     github        : 'https://github.com/JetradarMobile/android-sociallogin.git',
 
-    libraryVersion: '0.1.0'
+    libraryVersion: '0.1.2'
 ]
 
 ext.versions = [
@@ -40,7 +40,7 @@ ext.versions = [
     wechat                    : '5.1.6',
 
 
-    socialLogin               : '0.1.0'
+    socialLogin               : '0.1.2'
 ]
 
 ext.gradlePlugins = [
@@ -69,7 +69,7 @@ ext.libraries = [
     kotlinTestJunit         : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
     robolectric             : "org.robolectric:robolectric:$versions.robolectric",
 
-    socialLogin             : "com.github.jetradarmobile:sociallogin:$versions.socialLogin",
+    socialLogin             : "com.github.jetradarmobile:android-sociallogin:$versions.socialLogin",
 
     socialSdkVK             : "com.vk:androidsdk:$versions.vk",
     socialSdkLine           : "com.vk:androidsdk:$versions.line",

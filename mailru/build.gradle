@@ -40,7 +40,7 @@ publishing {
 
       groupId bintrayConstants.libraryGroup
       version bintrayConstants.libraryVersion
-      artifactId 'sociallogin-mailru'
+      artifactId 'android-sociallogin-mailru'
 
       pom.withXml {
         def dependenciesNode = asNode().appendNode('dependencies')
@@ -67,7 +67,7 @@ bintray {
 
   pkg {
     repo = bintrayConstants.repoName
-    name = 'sociallogin-mailru'
+    name = 'android-sociallogin-mailru'
     userOrg = bintrayConstants.userOrg
     licenses = ['Apache-2.0']
     vcsUrl = bintrayConstants.github

@@ -8,9 +8,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.google.GoogleLoginError.EmptyAccount
 import com.jetradarmobile.sociallogin.google.GoogleLoginError.LogoutCancelled
 import com.jetradarmobile.sociallogin.google.GoogleLoginError.LogoutFailed
@@ -21,6 +21,7 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
   private var loginCallback: SocialLoginCallback? = null
 
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   override fun login(activity: Activity, callback: SocialLoginCallback) {
     loginCallback = callback
@@ -37,10 +38,7 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
     }
   }
 
-  private fun openLoginScreen(activity: Activity) {
-    val signInIntent = googleSignInClient.signInIntent
-    activity.startActivityForResult(signInIntent, REQUEST_CODE)
-  }
+  private fun openLoginScreen(activity: Activity) = activity.startActivityForResult(googleSignInClient.signInIntent, REQUEST_CODE)
 
   override fun logout(activity: Activity) {
     createClient(activity)
@@ -87,7 +85,7 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
   )
 
   companion object {
-    private const val REQUEST_CODE = 0x0C1E
+    const val REQUEST_CODE = 0x001b
     const val CODE = "google"
   }
 }

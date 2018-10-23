@@ -31,7 +31,7 @@ publishing {
 
       groupId bintrayConstants.libraryGroup
       version bintrayConstants.libraryVersion
-      artifactId 'sociallogin-rxjava2'
+      artifactId 'android-sociallogin-rxjava2'
 
       pom.withXml {
         def dependenciesNode = asNode().appendNode('dependencies')
@@ -58,7 +58,7 @@ bintray {
 
   pkg {
     repo = bintrayConstants.repoName
-    name = 'sociallogin-rxjava2'
+    name = 'android-sociallogin-rxjava2'
     userOrg = bintrayConstants.userOrg
     licenses = ['Apache-2.0']
     vcsUrl = bintrayConstants.github

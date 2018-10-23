@@ -35,7 +35,7 @@ publishing {
 
       groupId bintrayConstants.libraryGroup
       version bintrayConstants.libraryVersion
-      artifactId 'sociallogin-wechat'
+      artifactId 'android-sociallogin-wechat'
 
       pom.withXml {
         def dependenciesNode = asNode().appendNode('dependencies')
@@ -62,7 +62,7 @@ bintray {
 
   pkg {
     repo = bintrayConstants.repoName
-    name = 'sociallogin-wechat'
+    name = 'android-sociallogin-wechat'
     userOrg = bintrayConstants.userOrg
     licenses = ['Apache-2.0']
     vcsUrl = bintrayConstants.github

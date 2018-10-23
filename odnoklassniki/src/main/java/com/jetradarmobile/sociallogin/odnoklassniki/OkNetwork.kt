@@ -2,22 +2,24 @@ package com.jetradarmobile.sociallogin.odnoklassniki
 
 import android.app.Activity
 import android.content.Intent
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialLoginError.UNKNOWN
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import org.json.JSONObject
 import ru.ok.android.sdk.Odnoklassniki
 import ru.ok.android.sdk.OkListener
 import ru.ok.android.sdk.util.OkAuthType
 
 class OkNetwork(
-    val appId: String,
-    val appKey: String,
-    val redirectUrl: String,
-    val scope: List<String>
+    private val appId: String,
+    private val appKey: String,
+    private val redirectUrl: String,
+    private val scope: List<String>
 ) : SocialNetwork, OkListener {
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
   private var okInstance: Odnoklassniki? = null
@@ -44,8 +46,7 @@ class OkNetwork(
   }
 
   override fun onError(okError: String?) {
-    val error = if (!okError.isNullOrEmpty()) SocialLoginError(okError as String) else SocialLoginError.UNKNOWN
-    loginCallback?.onLoginError(this, error)
+    loginCallback?.onLoginError(this, if (!okError.isNullOrEmpty()) SocialLoginError(okError) else UNKNOWN)
   }
 
   private fun okInstance(activity: Activity): Odnoklassniki {
@@ -60,5 +61,6 @@ class OkNetwork(
 
   companion object {
     const val CODE = "ok"
+    const val REQUEST_CODE = 0x002a
   }
 }

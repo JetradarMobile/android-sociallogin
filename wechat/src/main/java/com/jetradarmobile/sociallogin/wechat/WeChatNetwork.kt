@@ -2,10 +2,10 @@ package com.jetradarmobile.sociallogin.wechat
 
 import android.app.Activity
 import android.content.Intent
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.wechat.WXLoginError.UNKNOWN
 import com.squareup.moshi.Moshi
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -23,6 +23,7 @@ class WeChatNetwork(
     private val token: String
 ) : SocialNetwork {
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
   private var tokenCall: Call? = null
@@ -94,5 +95,6 @@ class WeChatNetwork(
 
   companion object {
     const val CODE = "wechat"
+    const val REQUEST_CODE = 0x002d
   }
 }

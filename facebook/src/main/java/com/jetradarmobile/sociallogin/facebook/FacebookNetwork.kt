@@ -9,15 +9,17 @@ import com.facebook.FacebookException
 import com.facebook.Profile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 
 
 class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, FacebookCallback<LoginResult> {
   private val callbackManager = CallbackManager.Factory.create()
+
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -75,6 +77,7 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
 
   companion object {
     const val CODE = "facebook"
+    const val REQUEST_CODE = 0x001a
   }
 
 }

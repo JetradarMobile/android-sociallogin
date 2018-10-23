@@ -5,6 +5,7 @@ import android.content.Intent
 
 interface SocialNetwork {
   val code: String
+  val requestCode: Int
 
   fun login(activity: Activity, callback: SocialLoginCallback)
   fun logout(activity: Activity)

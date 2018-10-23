@@ -2,10 +2,10 @@ package com.jetradarmobile.sociallogin.twitter
 
 import android.app.Activity
 import android.content.Intent
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterCore
@@ -15,6 +15,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
 class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
 
   private lateinit var authClient: TwitterAuthClient
   private var loginCallback: SocialLoginCallback? = null
@@ -51,6 +52,7 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
 
   companion object {
     const val CODE = "twitter"
+    const val REQUEST_CODE = 0x002b
   }
 
 }

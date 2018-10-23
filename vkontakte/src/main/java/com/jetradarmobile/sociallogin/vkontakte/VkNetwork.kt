@@ -2,10 +2,10 @@ package com.jetradarmobile.sociallogin.vkontakte
 
 import android.app.Activity
 import android.content.Intent
+import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialLoginCallback
 import com.jetradarmobile.sociallogin.SocialLoginError
 import com.jetradarmobile.sociallogin.SocialNetwork
-import com.jetradarmobile.sociallogin.SocialAccount
 import com.vk.sdk.VKAccessToken
 import com.vk.sdk.VKCallback
 import com.vk.sdk.VKSdk
@@ -14,6 +14,8 @@ import com.vk.sdk.api.VKError
 
 class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKAccessToken> {
   override val code: String = CODE
+  override val requestCode: Int = REQUEST_CODE
+
   private var loginCallback: SocialLoginCallback? = null
 
   override fun login(activity: Activity, callback: SocialLoginCallback) {
@@ -59,5 +61,6 @@ class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKA
 
   companion object {
     const val CODE = "vk"
+    const val REQUEST_CODE = 0x002c
   }
 }
