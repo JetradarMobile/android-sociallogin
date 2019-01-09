@@ -14,7 +14,6 @@ import com.vk.sdk.api.VKError
 
 class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKAccessToken> {
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -55,12 +54,12 @@ class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKA
 
   private fun createSocialToken(vkAccessToken: VKAccessToken?) = SocialAccount(
       token = vkAccessToken?.accessToken ?: "",
+      networkCode = CODE,
       userId = vkAccessToken?.userId ?: "",
       email = vkAccessToken?.email ?: ""
   )
 
   companion object {
     const val CODE = "vk"
-    const val REQUEST_CODE = 0x002c
   }
 }

@@ -15,7 +15,6 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient
 
 class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private lateinit var authClient: TwitterAuthClient
   private var loginCallback: SocialLoginCallback? = null
@@ -45,6 +44,7 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
 
   private fun createSocialToken(session: TwitterSession?) = SocialAccount(
       token = session?.authToken?.token ?: "",
+      networkCode = CODE,
       secret = session?.authToken?.secret ?: "",
       userId = session?.userId?.toString() ?: "",
       userName = session?.userName ?: ""
@@ -52,7 +52,6 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
 
   companion object {
     const val CODE = "twitter"
-    const val REQUEST_CODE = 0x002b
   }
 
 }

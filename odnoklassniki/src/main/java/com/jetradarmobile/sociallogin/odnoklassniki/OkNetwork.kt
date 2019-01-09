@@ -19,7 +19,6 @@ class OkNetwork(
     private val scope: List<String>
 ) : SocialNetwork, OkListener {
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
   private var okInstance: Odnoklassniki? = null
@@ -56,11 +55,12 @@ class OkNetwork(
     return okInstance!!
   }
 
-  private fun createSocialToken(json: JSONObject?) =
-      SocialAccount(token = json?.getString("access_token") ?: "")
+  private fun createSocialToken(json: JSONObject?) = SocialAccount(
+      token = json?.getString("access_token") ?: "",
+      networkCode = CODE
+  )
 
   companion object {
     const val CODE = "ok"
-    const val REQUEST_CODE = 0x002a
   }
 }

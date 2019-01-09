@@ -15,7 +15,6 @@ class MailRuNetwork(
 ) : SocialNetwork {
 
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -60,10 +59,10 @@ class MailRuNetwork(
     }
   }
 
-  private fun makeToken(token: String?) = SocialAccount(token ?: "")
+  private fun makeToken(token: String?) = SocialAccount(token ?: "", CODE)
 
   companion object {
-    const val REQUEST_CODE = 0x001e
+    private const val REQUEST_CODE = 0x001e
     const val CODE = "mail_ru"
   }
 }

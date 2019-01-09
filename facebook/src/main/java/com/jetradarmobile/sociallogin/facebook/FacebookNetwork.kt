@@ -19,7 +19,6 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
   private val callbackManager = CallbackManager.Factory.create()
 
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -71,13 +70,13 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
 
   private fun createSocialToken(accessToken: AccessToken, profile: Profile?) = SocialAccount(
       token = accessToken.token,
+      networkCode = CODE,
       userId = accessToken.userId,
       userName = profile?.name ?: ""
   )
 
   companion object {
     const val CODE = "facebook"
-    const val REQUEST_CODE = 0x001a
   }
 
 }

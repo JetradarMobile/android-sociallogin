@@ -15,7 +15,6 @@ import com.linecorp.linesdk.auth.LineLoginApi
 
 class LineNetwork(private val channelId: String) : SocialNetwork {
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
 
@@ -54,12 +53,13 @@ class LineNetwork(private val channelId: String) : SocialNetwork {
 
   private fun makeToken(cred: LineCredential?, profile: LineProfile?) = SocialAccount(
       token = cred?.accessToken?.accessToken ?: "",
+      networkCode = CODE,
       userId = profile?.userId ?: "",
       userName = profile?.displayName ?: ""
   )
 
   companion object {
-    const val REQUEST_CODE = 0x001c
+    private const val REQUEST_CODE = 0x001c
     const val CODE = "line"
   }
 }

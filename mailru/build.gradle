@@ -25,7 +25,7 @@ dependencies {
   implementation libraries.okHttpLoggingInterceptor
   implementation libraries.moshi
 
-  implementation project(':sociallogin') //libraries.socialLogin
+  implementation libraries.socialLogin
 }
 
 androidExtensions {

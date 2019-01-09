@@ -23,7 +23,6 @@ class WeChatNetwork(
     private val token: String
 ) : SocialNetwork {
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   private var loginCallback: SocialLoginCallback? = null
   private var tokenCall: Call? = null
@@ -86,7 +85,11 @@ class WeChatNetwork(
   }
 
   private fun handleSuccess(tokenBean: TokenBean) {
-    loginCallback?.onLoginSuccess(this, SocialAccount(token = tokenBean.token, openid = tokenBean.openId))
+    loginCallback?.onLoginSuccess(this, SocialAccount(
+        token = tokenBean.token,
+        networkCode = CODE,
+        openid = tokenBean.openId
+    ))
   }
 
   private fun handleError(error: Throwable) {
@@ -95,6 +98,5 @@ class WeChatNetwork(
 
   companion object {
     const val CODE = "wechat"
-    const val REQUEST_CODE = 0x002d
   }
 }

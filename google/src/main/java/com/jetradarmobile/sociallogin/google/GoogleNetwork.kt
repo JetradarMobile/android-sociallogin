@@ -21,7 +21,6 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
   private var loginCallback: SocialLoginCallback? = null
 
   override val code: String = CODE
-  override val requestCode: Int = REQUEST_CODE
 
   override fun login(activity: Activity, callback: SocialLoginCallback) {
     loginCallback = callback
@@ -79,13 +78,14 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
 
   private fun createSocialToken(account: GoogleSignInAccount) = SocialAccount(
       token = account.idToken ?: "",
+      networkCode = CODE,
       userId = account.id ?: "",
       userName = account.displayName ?: "",
       email = account.email ?: ""
   )
 
   companion object {
-    const val REQUEST_CODE = 0x001b
+    private const val REQUEST_CODE = 0x001b
     const val CODE = "google"
   }
 }

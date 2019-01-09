@@ -8,9 +8,11 @@ package com.jetradarmobile.sociallogin
  * @property userId user identifier in social network
  * @property userName user display name
  * @property email user email
+ * @property openid optional openID, used in wechat
  */
 data class SocialAccount(
     val token: String,
+    val networkCode: String,
     val secret: String = "",
     val userId: String = "",
     val userName: String = "",
