@@ -1,6 +1,6 @@
 package com.jetradarmobile.sociallogin
 
-open class SocialLoginError(reason: Reason, cause: Throwable? = null) : Throwable(reason.message, cause) {
+open class SocialLoginError(val reason: Reason, cause: Throwable? = null) : Throwable(reason.message, cause) {
   constructor(message: String) : this(Reason(message))
 
   object CANCELLED : SocialLoginError(Reason.CANCEL)

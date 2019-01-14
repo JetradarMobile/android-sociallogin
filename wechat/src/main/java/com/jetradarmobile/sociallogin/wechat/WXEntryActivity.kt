@@ -17,9 +17,9 @@ open class WXEntryActivity : Activity(), IWXAPIEventHandler {
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val token = intent.extras?.getString(EXTRA_TOKEN) ?: ""
-    api = WXAPIFactory.createWXAPI(this, token, false).apply {
-      registerApp(token)
+    val appId = intent.extras?.getString(EXTRA_APP_ID) ?: ""
+    api = WXAPIFactory.createWXAPI(this, appId, false).apply {
+      registerApp(appId)
       handleIntent(intent, this@WXEntryActivity)
     }
 
@@ -50,7 +50,7 @@ open class WXEntryActivity : Activity(), IWXAPIEventHandler {
     } else if (resp is SendAuth.Resp) {
       val token = resp.code
       val data = Intent()
-      data.putExtra(EXTRA_TOKEN, token)
+      data.putExtra(EXTRA_APP_ID, token)
       setResult(Activity.RESULT_OK, data)
     }
     finish()
@@ -58,7 +58,7 @@ open class WXEntryActivity : Activity(), IWXAPIEventHandler {
 
   companion object {
     const val EXTRA_REGISTER = "extra_register"
-    const val EXTRA_TOKEN = "extra_token"
+    const val EXTRA_APP_ID = "extra_app_id"
     const val EXTRA_ERROR = "extra_error"
     const val EXTRA_ERROR_STRING = "extra_error_string"
 

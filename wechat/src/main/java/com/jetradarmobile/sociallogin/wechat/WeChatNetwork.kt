@@ -18,9 +18,8 @@ import java.io.IOException
 
 
 class WeChatNetwork(
-    private val clientId: String,
-    private val clientSecret: String,
-    private val token: String
+    private val appId: String,
+    private val appSecret: String
 ) : SocialNetwork {
   override val code: String = CODE
 
@@ -30,16 +29,16 @@ class WeChatNetwork(
   override fun login(activity: Activity, callback: SocialLoginCallback) {
     loginCallback = callback
 
-    val api = WXAPIFactory.createWXAPI(activity, token)
+    val api = WXAPIFactory.createWXAPI(activity, appId)
     api.sendReq(SendAuth.Req().apply { })
     val intent = Intent(activity, WXEntryActivity::class.java)
     intent.putExtra(WXEntryActivity.EXTRA_REGISTER, true)
-    intent.putExtra(WXEntryActivity.EXTRA_TOKEN, token)
+    intent.putExtra(WXEntryActivity.EXTRA_APP_ID, appId)
     activity.startActivityForResult(intent, WXEntryActivity.REGISTER_CODE)
   }
 
   override fun logout(activity: Activity) {
-    val api = WXAPIFactory.createWXAPI(activity, token)
+    val api = WXAPIFactory.createWXAPI(activity, appId)
     api.unregisterApp()
   }
 
@@ -48,7 +47,7 @@ class WeChatNetwork(
 
 
     if (resultCode == Activity.RESULT_OK) {
-      requestAccessToken(data?.getStringExtra(WXEntryActivity.EXTRA_TOKEN) ?: "")
+      requestAccessToken(data?.getStringExtra(WXEntryActivity.EXTRA_APP_ID) ?: "")
     } else {
       val error = data?.getIntExtra(WXEntryActivity.EXTRA_ERROR, Int.MIN_VALUE) ?: Int.MIN_VALUE
       val reason = when (error) {
@@ -67,7 +66,7 @@ class WeChatNetwork(
       loginCallback?.onLoginError(this, WXLoginError(UNKNOWN))
       return
     }
-    tokenCall = WeChatApi.requestToken(clientId, clientSecret, code).apply {
+    tokenCall = WeChatApi.requestToken(appId, appSecret, code).apply {
       enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) = handleError(e)
 

@@ -14,21 +14,21 @@ object WeChatApi {
   private const val TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token"
 
   fun requestToken(
-      clientId: String,
-      clientSecret: String,
+      appId: String,
+      appSecret: String,
       code: String,
       debug: Boolean = false): Call = OkHttpClient.Builder()
       .apply { if (debug) addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }) }
       .enableTls12OnPreLollipop()
       .build()
-      .newCall(createTokenUrl(clientId, clientSecret, code))
+      .newCall(createTokenUrl(appId, appSecret, code))
 
-  private fun createTokenUrl(clientId: String, clientSecret: String, code: String): Request = Request.Builder()
+  private fun createTokenUrl(appId: String, appSecret: String, code: String): Request = Request.Builder()
       .url(TOKEN_URL)
       .addHeader("Content-Type", "application/x-www-form-urlencoded")
       .post(FormBody.Builder()
-          .add("appid", clientId)
-          .add("secret", clientSecret)
+          .add("appid", appId)
+          .add("secret", appSecret)
           .add("code", code)
           .add("grant_type", "authorization_code")
           .build()
