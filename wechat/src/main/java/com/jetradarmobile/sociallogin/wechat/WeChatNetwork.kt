@@ -2,9 +2,10 @@ package com.jetradarmobile.sociallogin.wechat
 
 import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.jetradarmobile.sociallogin.SocialNetwork
 import com.jetradarmobile.sociallogin.wechat.WXLoginError.UNKNOWN
 import com.squareup.moshi.Moshi
@@ -23,23 +24,25 @@ class WeChatNetwork(
 ) : SocialNetwork {
   override val code: String = CODE
 
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
   private var tokenCall: Call? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     loginCallback = callback
 
-    val api = WXAPIFactory.createWXAPI(activity, appId)
+    val context = fragment.requireContext()
+    val api = WXAPIFactory.createWXAPI(context, appId)
     api.sendReq(SendAuth.Req().apply { })
-    val intent = Intent(activity, WXEntryActivity::class.java)
+    val intent = Intent(context, WXEntryActivity::class.java)
     intent.putExtra(WXEntryActivity.EXTRA_REGISTER, true)
     intent.putExtra(WXEntryActivity.EXTRA_APP_ID, appId)
-    activity.startActivityForResult(intent, WXEntryActivity.REGISTER_CODE)
+    fragment.startActivityForResult(intent, WXEntryActivity.REGISTER_CODE)
   }
 
-  override fun logout(activity: Activity) {
-    val api = WXAPIFactory.createWXAPI(activity, appId)
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+    val api = WXAPIFactory.createWXAPI(fragment.requireContext(), appId)
     api.unregisterApp()
+    callback.onLogoutSuccess(this)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -51,19 +54,19 @@ class WeChatNetwork(
     } else {
       val error = data?.getIntExtra(WXEntryActivity.EXTRA_ERROR, Int.MIN_VALUE) ?: Int.MIN_VALUE
       val reason = when (error) {
-        BaseResp.ErrCode.ERR_USER_CANCEL -> SocialLoginError.Reason.CANCEL
+        BaseResp.ErrCode.ERR_USER_CANCEL -> SocialAuthError.Reason.CANCEL
         BaseResp.ErrCode.ERR_AUTH_DENIED -> WXLoginError.DENY
         BaseResp.ErrCode.ERR_UNSUPPORT   -> WXLoginError.UNSUPPORTED
         else                             -> WXLoginError.UNKNOWN
       }
-      loginCallback?.onLoginError(this, SocialLoginError(reason))
+      loginCallback?.onAuthError(this, SocialAuthError(reason))
     }
   }
 
 
   private fun requestAccessToken(code: String) {
     if (code.isEmpty()) {
-      loginCallback?.onLoginError(this, WXLoginError(UNKNOWN))
+      loginCallback?.onAuthError(this, WXLoginError(UNKNOWN))
       return
     }
     tokenCall = WeChatApi.requestToken(appId, appSecret, code).apply {
@@ -74,9 +77,9 @@ class WeChatNetwork(
           val body = response.body()
           if (response.isSuccessful && body != null) {
             Moshi.Builder().build().adapter(TokenBean::class.java).fromJson(body.source())?.let { handleSuccess(it) }
-                ?: handleError(SocialLoginError.UNKNOWN)
+                ?: handleError(SocialAuthError.UNKNOWN)
           } else {
-            handleError(SocialLoginError.UNKNOWN)
+            handleError(SocialAuthError.UNKNOWN)
           }
         }
       })
@@ -92,7 +95,7 @@ class WeChatNetwork(
   }
 
   private fun handleError(error: Throwable) {
-    loginCallback?.onLoginError(this, WXLoginError(UNKNOWN, error))
+    loginCallback?.onAuthError(this, WXLoginError(UNKNOWN, error))
   }
 
   companion object {

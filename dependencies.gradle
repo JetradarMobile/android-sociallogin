@@ -5,7 +5,7 @@ ext.bintrayConstants = [
     libraryDesc   : 'Reactive library for social authorization',
     github        : 'https://github.com/JetradarMobile/android-sociallogin.git',
 
-    libraryVersion: '0.1.4'
+    libraryVersion: '0.1.6'
 ]
 
 ext.versions = [
@@ -20,7 +20,7 @@ ext.versions = [
 
     androidX            : '1.0.0',
 
-    rxJava2             : '2.2.5',
+    rxJava2             : '2.2.6',
     rxKotlin            : '2.3.0',
     rxRelay             : '2.0.0',
 
@@ -35,11 +35,11 @@ ext.versions = [
     twitter             : '3.3.0@aar',
     ok                  : '2.1.6',
     google              : '16.0.1',
-    facebook            : '4.39.0',
+    facebook            : '4.40.0',
     wechat              : '5.1.6',
 
 
-    socialLogin         : '0.1.4'
+    socialLogin         : '0.1.6'
 ]
 
 ext.gradlePlugins = [
@@ -74,6 +74,6 @@ ext.libraries = [
     socialSdkTwitter        : "com.twitter.sdk.android:twitter-core:$versions.twitter",
     socialSdkOK             : "ru.ok:odnoklassniki-android-sdk:$versions.ok",
     socialSdkGoogle         : "com.google.android.gms:play-services-auth:$versions.google",
-    socialSdkFacebook       : "com.facebook.android:facebook-android-sdk:$versions.facebook",
+    socialSdkFacebook       : "com.facebook.android:facebook-login:$versions.facebook",
     socialSdkWechat         : "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:$versions.wechat",
 ]

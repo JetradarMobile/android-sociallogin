@@ -3,7 +3,7 @@ package com.jetradarmobile.sociallogin
 /**
  *  Callback interface. Handle login result
  */
-interface SocialLoginCallback {
+interface SocialAuthCallback {
 
   /**
    * Calls when login was successful
@@ -14,10 +14,17 @@ interface SocialLoginCallback {
   fun onLoginSuccess(socialNetwork: SocialNetwork, account: SocialAccount)
 
   /**
+   * Calls when logout was successful
+   *
+   * @param socialNetwork [SocialNetwork] implementation in which login was requested
+   */
+  fun onLogoutSuccess(socialNetwork: SocialNetwork)
+
+  /**
    * Calls when some error occurred
    *
    * @param socialNetwork [SocialNetwork] implementation with which request was unsuccessful
-   * @param error [SocialLoginError] error a social login error
+   * @param error [SocialAuthError] error a social login error
    */
-  fun onLoginError(socialNetwork: SocialNetwork, error: SocialLoginError)
+  fun onAuthError(socialNetwork: SocialNetwork, error: SocialAuthError)
 }

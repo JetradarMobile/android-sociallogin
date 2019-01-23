@@ -17,7 +17,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.ac_mail_ru_login.progressBar
 import kotlinx.android.synthetic.main.ac_mail_ru_login.toolbar
@@ -130,9 +130,9 @@ class MailRuLoginActivity : AppCompatActivity() {
           val body = response.body()
           if (response.isSuccessful && body != null) {
             Moshi.Builder().build().adapter(TokenBean::class.java).fromJson(body.source())?.let { authSuccess(it) }
-                ?: authFailed(SocialLoginError.UNKNOWN)
+                ?: authFailed(SocialAuthError.UNKNOWN)
           } else {
-            authFailed(SocialLoginError.UNKNOWN)
+            authFailed(SocialAuthError.UNKNOWN)
           }
         }
       })

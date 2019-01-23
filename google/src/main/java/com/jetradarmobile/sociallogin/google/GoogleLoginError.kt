@@ -3,10 +3,10 @@ package com.jetradarmobile.sociallogin.google
 
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthError
 
 
-open class GoogleLoginError(reason: Reason, cause: Throwable? = null) : SocialLoginError(reason, cause) {
+open class GoogleLoginError(reason: Reason, cause: Throwable? = null) : SocialAuthError(reason, cause) {
 
   object NoLogin : Reason("Google account receive error")
   object SignInRequired : Reason("SignInRequired")

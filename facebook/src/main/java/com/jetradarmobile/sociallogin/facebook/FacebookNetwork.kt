@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.facebook
 
-import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -10,8 +10,8 @@ import com.facebook.Profile
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.jetradarmobile.sociallogin.SocialNetwork
 
 
@@ -20,9 +20,9 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
 
   override val code: String = CODE
 
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     this.loginCallback = callback
 
     LoginManager.getInstance().registerCallback(callbackManager, this)
@@ -31,23 +31,24 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
     val profile = Profile.getCurrentProfile()
 
     if (token == null) {
-      LoginManager.getInstance().logInWithReadPermissions(activity, permissions)
+      LoginManager.getInstance().logInWithReadPermissions(fragment, permissions)
     } else {
       val socialToken = createSocialToken(token, profile)
       loginCallback?.onLoginSuccess(this, socialToken)
     }
   }
 
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+    LoginManager.getInstance().logOut()
+    callback.onLogoutSuccess(this)
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     callbackManager.onActivityResult(requestCode, resultCode, data)
   }
 
-  override fun logout(activity: Activity) {
-    LoginManager.getInstance().logOut()
-  }
-
   override fun onCancel() {
-    loginCallback?.onLoginError(this, SocialLoginError.CANCELLED)
+    loginCallback?.onAuthError(this, SocialAuthError.CANCELLED)
   }
 
   override fun onSuccess(result: LoginResult?) {
@@ -58,14 +59,14 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
       val socialToken = createSocialToken(token, profile)
       loginCallback?.onLoginSuccess(this, socialToken)
     } else {
-      loginCallback?.onLoginError(this, FacebookLoginError(FacebookLoginError.NoLogin))
+      loginCallback?.onAuthError(this, FacebookLoginError(FacebookLoginError.NoLogin))
     }
   }
 
   override fun onError(error: FacebookException?) {
     val message = error?.message ?: ""
-    loginCallback?.onLoginError(this,
-        if (message.isNotEmpty()) SocialLoginError(message) else SocialLoginError.CANCELLED)
+    loginCallback?.onAuthError(this,
+        if (message.isNotEmpty()) SocialAuthError(message) else SocialAuthError.CANCELLED)
   }
 
   private fun createSocialToken(accessToken: AccessToken, profile: Profile?) = SocialAccount(

@@ -1,10 +1,10 @@
 package com.jetradarmobile.sociallogin.vkontakte
 
-import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.jetradarmobile.sociallogin.SocialNetwork
 import com.vk.sdk.VKAccessToken
 import com.vk.sdk.VKCallback
@@ -15,15 +15,16 @@ import com.vk.sdk.api.VKError
 class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKAccessToken> {
   override val code: String = CODE
 
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     loginCallback = callback
-    VKSdk.login(activity, *scope.toTypedArray())
+    VKSdk.login(fragment.requireActivity(), *scope.toTypedArray())
   }
 
-  override fun logout(activity: Activity) {
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
     VKSdk.logout()
+    callback.onLogoutSuccess(this)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -35,21 +36,21 @@ class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKA
       if (token != null) {
         it.onLoginSuccess(this, createSocialToken(token))
       } else {
-        it.onLoginError(this, VkLoginError(VkLoginError.NoLogin))
+        it.onAuthError(this, VkLoginError(VkLoginError.NoLogin))
       }
     }
   }
 
   override fun onError(vkError: VKError?) {
     val error = when {
-      vkError == null                          -> SocialLoginError.UNKNOWN
-      vkError.errorCode == VKError.VK_CANCELED -> SocialLoginError.CANCELLED
+      vkError == null                          -> SocialAuthError.UNKNOWN
+      vkError.errorCode == VKError.VK_CANCELED -> SocialAuthError.CANCELLED
       else                                     -> {
         val message = vkError.let { "[${it.errorCode}] - ${it.errorReason} : ${it.errorMessage}" }
-        SocialLoginError(message)
+        SocialAuthError(message)
       }
     }
-    loginCallback?.onLoginError(this, error)
+    loginCallback?.onAuthError(this, error)
   }
 
   private fun createSocialToken(vkAccessToken: VKAccessToken?) = SocialAccount(

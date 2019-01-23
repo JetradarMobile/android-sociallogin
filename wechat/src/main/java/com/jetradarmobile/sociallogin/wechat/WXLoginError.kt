@@ -1,8 +1,8 @@
 package com.jetradarmobile.sociallogin.wechat
 
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthError
 
-class WXLoginError(reason: Reason, cause: Throwable? = null) : SocialLoginError(reason, cause) {
+class WXLoginError(reason: Reason, cause: Throwable? = null) : SocialAuthError(reason, cause) {
   object DENY : Reason("Operation denied")
   object UNSUPPORTED : Reason("Operation unsupported")
   object UNKNOWN : Reason("Unknown error")

@@ -1,10 +1,10 @@
 package com.jetradarmobile.sociallogin.twitter
 
-import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.jetradarmobile.sociallogin.SocialNetwork
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
@@ -17,16 +17,17 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
   override val code: String = CODE
 
   private lateinit var authClient: TwitterAuthClient
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     loginCallback = callback
     authClient = TwitterAuthClient()
-    authClient.authorize(activity, this)
+    authClient.authorize(fragment.requireActivity(), this)
   }
 
-  override fun logout(activity: Activity) {
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
     TwitterCore.getInstance().sessionManager.takeIf { it.activeSession != null }?.clearActiveSession()
+    callback.onLogoutSuccess(this)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) =
@@ -38,8 +39,8 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
 
   override fun failure(exception: TwitterException?) {
     val message = exception?.message ?: ""
-    loginCallback?.onLoginError(this,
-        if (message.isNotEmpty()) SocialLoginError(message) else SocialLoginError.CANCELLED)
+    loginCallback?.onAuthError(this,
+        if (message.isNotEmpty()) SocialAuthError(message) else SocialAuthError.CANCELLED)
   }
 
   private fun createSocialToken(session: TwitterSession?) = SocialAccount(

@@ -1,10 +1,10 @@
 package com.jetradarmobile.sociallogin.line
 
-import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
 import com.jetradarmobile.sociallogin.SocialNetwork
 import com.linecorp.linesdk.LineApiResponseCode
 import com.linecorp.linesdk.LineCredential
@@ -18,27 +18,28 @@ import com.linecorp.linesdk.auth.LineLoginApi
 class LineNetwork(private val channelId: String) : SocialNetwork {
   override val code: String = CODE
 
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     loginCallback = callback
-
-    val context = activity.applicationContext
 
     val params = LineAuthenticationParams.Builder()
         .scopes(listOf(Scope.PROFILE, Scope.OC_EMAIL))
         .build()
+    val context = fragment.requireContext()
     var intent = LineLoginApi.getLoginIntent(context, channelId, params)
-    if (intent.resolveActivity(activity.packageManager) != null) {
-      activity.startActivityForResult(intent, REQUEST_CODE)
+    if (intent.resolveActivity(context.packageManager) != null) {
+      fragment.startActivityForResult(intent, REQUEST_CODE)
     } else {
       intent = LineLoginApi.getLoginIntentWithoutLineAppAuth(context, channelId, params)
-      activity.startActivityForResult(intent, REQUEST_CODE)
+      fragment.startActivityForResult(intent, REQUEST_CODE)
     }
   }
 
-  override fun logout(activity: Activity) {
-    LineApiClientBuilder(activity, channelId).build().logout()
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+    val response = LineApiClientBuilder(fragment.requireContext(), channelId).build().logout()
+    if (response.isSuccess) callback.onLogoutSuccess(this)
+    else callback.onAuthError(this, SocialAuthError.UNKNOWN)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,8 +47,8 @@ class LineNetwork(private val channelId: String) : SocialNetwork {
     val result = LineLoginApi.getLoginResultFromIntent(data)
     when (result.responseCode) {
       LineApiResponseCode.SUCCESS -> loginCallback?.onLoginSuccess(this, makeToken(result.lineCredential, result.lineProfile))
-      LineApiResponseCode.CANCEL  -> loginCallback?.onLoginError(this, SocialLoginError.CANCELLED)
-      else                        -> loginCallback?.onLoginError(this, SocialLoginError(result.errorData.toString()))
+      LineApiResponseCode.CANCEL  -> loginCallback?.onAuthError(this, SocialAuthError.CANCELLED)
+      else                        -> loginCallback?.onAuthError(this, SocialAuthError(result.errorData.toString()))
     }
   }
 

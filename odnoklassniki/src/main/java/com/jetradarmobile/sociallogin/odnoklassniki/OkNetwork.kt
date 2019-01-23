@@ -1,11 +1,11 @@
 package com.jetradarmobile.sociallogin.odnoklassniki
 
-import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
-import com.jetradarmobile.sociallogin.SocialLoginCallback
-import com.jetradarmobile.sociallogin.SocialLoginError
-import com.jetradarmobile.sociallogin.SocialLoginError.UNKNOWN
+import com.jetradarmobile.sociallogin.SocialAuthCallback
+import com.jetradarmobile.sociallogin.SocialAuthError
+import com.jetradarmobile.sociallogin.SocialAuthError.UNKNOWN
 import com.jetradarmobile.sociallogin.SocialNetwork
 import org.json.JSONObject
 import ru.ok.android.sdk.Odnoklassniki
@@ -20,20 +20,21 @@ class OkNetwork(
 ) : SocialNetwork, OkListener {
   override val code: String = CODE
 
-  private var loginCallback: SocialLoginCallback? = null
+  private var loginCallback: SocialAuthCallback? = null
   private var okInstance: Odnoklassniki? = null
 
-  override fun login(activity: Activity, callback: SocialLoginCallback) {
+  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
     loginCallback = callback
-    okInstance(activity).requestAuthorization(
-        activity,
+    okInstance(fragment).requestAuthorization(
+        fragment.requireActivity(),
         redirectUrl,
         OkAuthType.ANY,
         *scope.toTypedArray())
   }
 
-  override fun logout(activity: Activity) {
-    okInstance(activity).clearTokens()
+  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+    okInstance(fragment).clearTokens()
+    callback.onLogoutSuccess(this)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -45,15 +46,12 @@ class OkNetwork(
   }
 
   override fun onError(okError: String?) {
-    loginCallback?.onLoginError(this, if (!okError.isNullOrEmpty()) SocialLoginError(okError) else UNKNOWN)
+    loginCallback?.onAuthError(this, if (!okError.isNullOrEmpty()) SocialAuthError(okError) else UNKNOWN)
   }
 
-  private fun okInstance(activity: Activity): Odnoklassniki {
-    if (okInstance == null) {
-      okInstance = Odnoklassniki.createInstance(activity, appId, appKey)
-    }
-    return okInstance!!
-  }
+  private fun okInstance(fragment: Fragment): Odnoklassniki =
+      okInstance ?: Odnoklassniki.createInstance(fragment.requireContext(), appId, appKey).apply { okInstance = this }
+
 
   private fun createSocialToken(json: JSONObject?) = SocialAccount(
       token = json?.getString("access_token") ?: "",
