@@ -33,6 +33,7 @@ ext.versions = [
 
     vk                  : '1.6.9',
     twitter             : '3.3.0@aar',
+    line                : '5.0.1@aar',
     ok                  : '2.1.6',
     google              : '16.0.1',
     facebook            : '4.40.0',
@@ -71,6 +72,7 @@ ext.libraries = [
     socialLogin             : "com.github.jetradarmobile:android-sociallogin:$versions.socialLogin",
 
     socialSdkVK             : "com.vk:androidsdk:$versions.vk",
+    socialSdkLine           : "com.linecorp:androidlinesdk:$versions.line",
     socialSdkTwitter        : "com.twitter.sdk.android:twitter-core:$versions.twitter",
     socialSdkOK             : "ru.ok:odnoklassniki-android-sdk:$versions.ok",
     socialSdkGoogle         : "com.google.android.gms:play-services-auth:$versions.google",

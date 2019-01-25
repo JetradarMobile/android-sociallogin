@@ -20,7 +20,7 @@ dependencies {
   implementation libraries.kotlinStdLib
 
   implementation libraries.socialLogin
-  implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+  implementation libraries.socialSdkLine
 }
 
 publishing {
