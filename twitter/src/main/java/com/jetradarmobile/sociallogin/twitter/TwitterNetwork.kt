@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.twitter
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -19,13 +19,13 @@ class TwitterNetwork : Callback<TwitterSession>(), SocialNetwork {
   private lateinit var authClient: TwitterAuthClient
   private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
     authClient = TwitterAuthClient()
-    authClient.authorize(fragment.requireActivity(), this)
+    authClient.authorize(activity, this)
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
     TwitterCore.getInstance().sessionManager.takeIf { it.activeSession != null }?.clearActiveSession()
     callback.onLogoutSuccess(this)
   }

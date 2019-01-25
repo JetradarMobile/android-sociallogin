@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.vkontakte
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -17,12 +17,12 @@ class VkNetwork(private val scope: List<String>) : SocialNetwork, VKCallback<VKA
 
   private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
-    VKSdk.login(fragment.requireActivity(), *scope.toTypedArray())
+    VKSdk.login(activity, *scope.toTypedArray())
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
     VKSdk.logout()
     callback.onLogoutSuccess(this)
   }

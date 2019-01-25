@@ -2,7 +2,6 @@ package com.jetradarmobile.sociallogin.wechat
 
 import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -27,20 +26,19 @@ class WeChatNetwork(
   private var loginCallback: SocialAuthCallback? = null
   private var tokenCall: Call? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
 
-    val context = fragment.requireContext()
-    val api = WXAPIFactory.createWXAPI(context, appId)
+    val api = WXAPIFactory.createWXAPI(activity, appId)
     api.sendReq(SendAuth.Req().apply { })
-    val intent = Intent(context, WXEntryActivity::class.java)
+    val intent = Intent(activity, WXEntryActivity::class.java)
     intent.putExtra(WXEntryActivity.EXTRA_REGISTER, true)
     intent.putExtra(WXEntryActivity.EXTRA_APP_ID, appId)
-    fragment.startActivityForResult(intent, WXEntryActivity.REGISTER_CODE)
+    activity.startActivityForResult(intent, WXEntryActivity.REGISTER_CODE)
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
-    val api = WXAPIFactory.createWXAPI(fragment.requireContext(), appId)
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
+    val api = WXAPIFactory.createWXAPI(activity, appId)
     api.unregisterApp()
     callback.onLogoutSuccess(this)
   }

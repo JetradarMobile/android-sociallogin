@@ -1,13 +1,13 @@
 package com.jetradarmobile.sociallogin
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 
 interface SocialNetwork {
   val code: String
 
-  fun login(fragment: Fragment, callback: SocialAuthCallback)
-  fun logout(fragment: Fragment, callback: SocialAuthCallback)
+  fun login(activity: Activity, callback: SocialAuthCallback)
+  fun logout(activity: Activity, callback: SocialAuthCallback)
 
   fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 }

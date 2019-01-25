@@ -18,7 +18,6 @@ android {
 
 dependencies {
   implementation libraries.kotlinStdLib
-  implementation libraries.androidAppCompat
 }
 
 publishing {

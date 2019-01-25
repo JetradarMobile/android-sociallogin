@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.line
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -20,24 +20,23 @@ class LineNetwork(private val channelId: String) : SocialNetwork {
 
   private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
 
     val params = LineAuthenticationParams.Builder()
         .scopes(listOf(Scope.PROFILE, Scope.OC_EMAIL))
         .build()
-    val context = fragment.requireContext()
-    var intent = LineLoginApi.getLoginIntent(context, channelId, params)
-    if (intent.resolveActivity(context.packageManager) != null) {
-      fragment.startActivityForResult(intent, REQUEST_CODE)
+    var intent = LineLoginApi.getLoginIntent(activity, channelId, params)
+    if (intent.resolveActivity(activity.packageManager) != null) {
+      activity.startActivityForResult(intent, REQUEST_CODE)
     } else {
-      intent = LineLoginApi.getLoginIntentWithoutLineAppAuth(context, channelId, params)
-      fragment.startActivityForResult(intent, REQUEST_CODE)
+      intent = LineLoginApi.getLoginIntentWithoutLineAppAuth(activity, channelId, params)
+      activity.startActivityForResult(intent, REQUEST_CODE)
     }
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
-    val response = LineApiClientBuilder(fragment.requireContext(), channelId).build().logout()
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
+    val response = LineApiClientBuilder(activity, channelId).build().logout()
     if (response.isSuccess) callback.onLogoutSuccess(this)
     else callback.onAuthError(this, SocialAuthError.UNKNOWN)
   }

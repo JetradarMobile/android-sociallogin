@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.google
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,25 +22,25 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
   private var loginCallback: SocialAuthCallback? = null
   override val code: String = CODE
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
-    createClient(fragment)
-    if (GoogleSignIn.getLastSignedInAccount(fragment.requireContext()) != null) {
+    createClient(activity)
+    if (GoogleSignIn.getLastSignedInAccount(activity) != null) {
       // drop old account to prevent receiving of non valid token
       googleSignInClient.signOut()
           .continueWithTask { googleSignInClient.revokeAccess() }
-          .addOnCompleteListener { openLoginScreen(fragment) }
+          .addOnCompleteListener { openLoginScreen(activity) }
           .addOnCanceledListener { callback.onAuthError(this, GoogleLoginError(LogoutCancelled)) }
           .addOnFailureListener { callback.onAuthError(this, GoogleLoginError(LogoutFailed)) }
     } else {
-      openLoginScreen(fragment)
+      openLoginScreen(activity)
     }
   }
 
-  private fun openLoginScreen(fragment: Fragment) = fragment.startActivityForResult(googleSignInClient.signInIntent, REQUEST_CODE)
+  private fun openLoginScreen(activity: Activity) = activity.startActivityForResult(googleSignInClient.signInIntent, REQUEST_CODE)
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
-    createClient(fragment)
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
+    createClient(activity)
     googleSignInClient.signOut()
         .continueWithTask { googleSignInClient.revokeAccess() }
         .addOnSuccessListener { callback.onLogoutSuccess(this) }
@@ -55,7 +55,7 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
     }
   }
 
-  private fun createClient(fragment: Fragment) {
+  private fun createClient(activity: Activity) {
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestId()
         .requestEmail()
@@ -63,7 +63,7 @@ class GoogleNetwork(private val clientId: String) : SocialNetwork {
         .requestIdToken(clientId)
         .build()
 
-    googleSignInClient = GoogleSignIn.getClient(fragment.requireContext(), gso)
+    googleSignInClient = GoogleSignIn.getClient(activity, gso)
   }
 
   private fun handleSignInResult(task: Task<GoogleSignInAccount>) {

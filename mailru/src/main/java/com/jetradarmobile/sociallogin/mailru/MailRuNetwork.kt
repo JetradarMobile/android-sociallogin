@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.webkit.CookieManager
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -19,18 +18,17 @@ class MailRuNetwork(
 
   private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
 
-    val context = fragment.requireContext()
-    val intent = Intent(context, MailRuLoginActivity::class.java).apply {
+    val intent = Intent(activity, MailRuLoginActivity::class.java).apply {
       putExtra(MailRuLoginActivity.CLIENT_ID, clientId)
       putExtra(MailRuLoginActivity.CLIENT_SECRET, clientSecret)
     }
-    fragment.startActivityForResult(intent, REQUEST_CODE)
+    activity.startActivityForResult(intent, REQUEST_CODE)
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       CookieManager.getInstance().removeAllCookie()
     } else {

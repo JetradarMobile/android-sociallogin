@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.odnoklassniki
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.jetradarmobile.sociallogin.SocialAccount
 import com.jetradarmobile.sociallogin.SocialAuthCallback
 import com.jetradarmobile.sociallogin.SocialAuthError
@@ -23,17 +23,17 @@ class OkNetwork(
   private var loginCallback: SocialAuthCallback? = null
   private var okInstance: Odnoklassniki? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     loginCallback = callback
-    okInstance(fragment).requestAuthorization(
-        fragment.requireActivity(),
+    okInstance(activity).requestAuthorization(
+        activity,
         redirectUrl,
         OkAuthType.ANY,
         *scope.toTypedArray())
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
-    okInstance(fragment).clearTokens()
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
+    okInstance(activity).clearTokens()
     callback.onLogoutSuccess(this)
   }
 
@@ -49,8 +49,8 @@ class OkNetwork(
     loginCallback?.onAuthError(this, if (!okError.isNullOrEmpty()) SocialAuthError(okError) else UNKNOWN)
   }
 
-  private fun okInstance(fragment: Fragment): Odnoklassniki =
-      okInstance ?: Odnoklassniki.createInstance(fragment.requireContext(), appId, appKey).apply { okInstance = this }
+  private fun okInstance(activity: Activity): Odnoklassniki =
+      okInstance ?: Odnoklassniki.createInstance(activity, appId, appKey).apply { okInstance = this }
 
 
   private fun createSocialToken(json: JSONObject?) = SocialAccount(

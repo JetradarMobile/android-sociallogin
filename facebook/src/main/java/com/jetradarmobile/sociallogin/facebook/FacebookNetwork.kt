@@ -1,7 +1,7 @@
 package com.jetradarmobile.sociallogin.facebook
 
+import android.app.Activity
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -22,7 +22,7 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
 
   private var loginCallback: SocialAuthCallback? = null
 
-  override fun login(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun login(activity: Activity, callback: SocialAuthCallback) {
     this.loginCallback = callback
 
     LoginManager.getInstance().registerCallback(callbackManager, this)
@@ -31,14 +31,14 @@ class FacebookNetwork(private val permissions: List<String>) : SocialNetwork, Fa
     val profile = Profile.getCurrentProfile()
 
     if (token == null) {
-      LoginManager.getInstance().logInWithReadPermissions(fragment, permissions)
+      LoginManager.getInstance().logInWithReadPermissions(activity, permissions)
     } else {
       val socialToken = createSocialToken(token, profile)
       loginCallback?.onLoginSuccess(this, socialToken)
     }
   }
 
-  override fun logout(fragment: Fragment, callback: SocialAuthCallback) {
+  override fun logout(activity: Activity, callback: SocialAuthCallback) {
     LoginManager.getInstance().logOut()
     callback.onLogoutSuccess(this)
   }
