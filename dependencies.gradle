@@ -5,7 +5,7 @@ ext.bintrayConstants = [
     libraryDesc   : 'Reactive library for social authorization',
     github        : 'https://github.com/JetradarMobile/android-sociallogin.git',
 
-    libraryVersion: '0.1.8'
+    libraryVersion: '0.1.8.1'
 ]
 
 ext.versions = [
@@ -40,7 +40,7 @@ ext.versions = [
     wechat              : '5.1.6',
 
 
-    socialLogin         : '0.1.8'
+    socialLogin         : '0.1.8.1'
 ]
 
 ext.gradlePlugins = [
