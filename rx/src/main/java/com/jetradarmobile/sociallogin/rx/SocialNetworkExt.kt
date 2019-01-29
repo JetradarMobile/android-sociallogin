@@ -23,5 +23,5 @@ fun SocialNetwork.logout(activity: Activity): Completable = Completable.create {
     override fun onLogoutSuccess(socialNetwork: SocialNetwork) = emitter.onComplete()
     override fun onAuthError(socialNetwork: SocialNetwork, error: SocialAuthError) = emitter.onError(error)
   }
-  login(activity, callback)
+  logout(activity, callback)
 }

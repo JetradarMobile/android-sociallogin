@@ -24,5 +24,5 @@ suspend fun SocialNetwork.logout(activity: Activity): Unit = suspendCoroutine { 
     override fun onLogoutSuccess(socialNetwork: SocialNetwork) = continuation.resume(Unit)
     override fun onAuthError(socialNetwork: SocialNetwork, error: SocialAuthError) = continuation.resumeWithException(error)
   }
-  login(activity, callback)
+  logout(activity, callback)
 }
